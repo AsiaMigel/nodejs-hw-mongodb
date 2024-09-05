@@ -8,6 +8,7 @@ export const getAllContacts = async ({
   sortOrder = SORT_ORDER.ASC,
   sortBy = '_id',
   filter = {},
+  userId,
 }) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
@@ -21,6 +22,8 @@ export const getAllContacts = async ({
   if (filter.isFavorite !== undefined) {
     contactsQuery.where('isFavorite').equals(filter.isFavorite);
   }
+
+  contactsQuery.where('userId').equals(userId);
 
   const [contactsCount, contacts] = await Promise.all([
     ContactCollection.find().merge(contactsQuery).countDocuments(),
@@ -39,26 +42,15 @@ export const getAllContacts = async ({
   };
 };
 
-// export const getAllContacts = async ({page,perPage}) => {
-//   try {
-//     // const contacts = await ContactCollection.find();//повертає масив усіх контактів
-//     // console.log('Contacts:', contacts);
-//     // return contacts;
-//   } catch (error){
-//     console.error('Error fetching contacts:', error);
-//     throw error;
-//   };
-// };
-
-export const getContactById = async (contactId) => {
-  //повертає контакт за id
-  const contact = await ContactCollection.findById({ _id: contactId });
-  return contact;
-};
-
 //створення нового контакту
 export const createContact = async (payload) => {
   const contact = await ContactCollection.create(payload);
+  return contact;
+};
+
+export const getContactById = async (contactId, userId) => {
+  //повертає контакт за id
+  const contact = await ContactCollection.findById({ _id: contactId, userId });
   return contact;
 };
 
@@ -84,3 +76,14 @@ export const deleteContact = async (contactId) => {
   });
   return contact;
 };
+
+// export const getAllContacts = async ({page,perPage}) => {
+//   try {
+// const contacts = await ContactCollection.find();//повертає масив усіх контактів
+// console.log('Contacts:', contacts);
+// return contacts;
+//   } catch (error){
+//     console.error('Error fetching contacts:', error);
+//     throw error;
+//   };
+// };
