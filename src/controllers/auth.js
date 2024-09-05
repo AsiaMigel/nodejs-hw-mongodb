@@ -16,11 +16,75 @@ export async function registerUserController(req, res) {
 
     const registeredUser = await registerUser(payload);
     res.send({
-      status: 201,
-      message: 'Successfully registered a user!',
-      data: registeredUser,
+        status: 201,
+        message: 'Successfully registered a user!',
+        data: registeredUser,
+    });
+};
+
+//login
+
+export async function loginUserController(req, res) {
+    const { email, password } = req.body;
+    await loginUser(email, password);
+    const session = await loginUser(email, password);
+    console.log(session);
+
+    //cookies
+    res.cookie('refreshToken', session.refreshToken, {
+        httpOnly: true,
+        expires: session.refreshTokenValidUntil,
     });
 
-    //login
-    
+    res.cookie('sessionId', session._id, {
+        httpOnly: true,
+        expires: session.refreshTokenValidUntil,
+    });
+
+    res.send({
+        ststus: 200,
+        message: 'Successfully logged in userl',
+        data: {
+            accessToken: session.accessToken,
+        },
+    }); 
 }
+
+//завершити користування у системі
+
+export async function logoutUserController(req, res) {
+    const { sessionId } = req.cookies;
+    if (typeof sessionId === 'string') {
+        await logoutUser(sessionId);
+    }
+    res.clearCookie('refreshToken');
+    res.clearCookie('sessionId');
+
+    res.send(204).end();
+}
+
+export async function refreshUserController(req, res) {
+    const { sessionId, refreshToken } = req.cookies;
+
+    const session = await refreshUserSession(sessionId, refreshToken);
+
+    res.cookie('refreshToken', session.refreshToken, {
+        httpOnly: true,
+        expires: session.refreshTokenValidUntil,
+    });
+
+     res.cookie('sessionId', session._id, {
+      httpOnly: true,
+      expires: session.refreshTokenValidUntil,
+    });
+  
+    res.send({
+      status: 200,
+      message: 'Successfully refreshed a session!',
+      data: {
+        accessToken: session.accessToken,
+      },
+    });
+  res.send('Refresh!!!');
+};
+
