@@ -2,7 +2,7 @@ import handlebars from 'handlebars';
 import path from 'node:path';
 import fs from 'node:fs/promises';
 import { TEMPLATES_DIR } from '../constants/index.js';
-import { sendEmail } from '../utils/sendMail.js';
+import { sendEmail } from '../utils/sendEmail.js';
 import { env } from '../utils/env.js';
 import jwt from 'jsonwebtoken';
 import crypto from 'node:crypto';
