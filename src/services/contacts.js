@@ -79,9 +79,9 @@ export const deleteContact = async (contactId) => {
 
 // export const getAllContacts = async ({page,perPage}) => {
 //   try {
-// const contacts = await ContactCollection.find();//повертає масив усіх контактів
-// console.log('Contacts:', contacts);
-// return contacts;
+    // const contacts = await ContactCollection.find();//повертає масив усіх контактів
+    // console.log('Contacts:', contacts);
+    // return contacts;
 //   } catch (error){
 //     console.error('Error fetching contacts:', error);
 //     throw error;
