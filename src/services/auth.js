@@ -26,7 +26,7 @@ export async function registerUser(payload) {
   return UserCollection.create(payload);
 }
 
-// //функціонал логіну - аудентифікація
+//функціонал логіну - аудентифікація
 export async function loginUser(email, password) {
   const maybeUser = await UserCollection.findOne({ email });
   if (maybeUser === null) {
@@ -51,7 +51,7 @@ export async function loginUser(email, password) {
   });
 }
 
-// //Видалення
+//Видалення
 export function logoutUser(sessionId) {
   return SessionCollection.deleteOne({ _id: sessionId });
 }

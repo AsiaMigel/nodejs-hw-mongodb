@@ -3,10 +3,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const env = (name, defaultValue) => {
-    const value = process.env[name];
+  const value = process.env[name];
 
-    if (value) return value;
+  if (value) return value;
 
-    if (defaultValue) return defaultValue;
-    throw new Error(`${name} variable doesn't exist!`);
+  if (defaultValue) return defaultValue;
+  throw new Error(`${name} variable doesn't exist!!!`);
 };
