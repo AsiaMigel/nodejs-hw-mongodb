@@ -8,7 +8,6 @@ import {
   requestResetEmailSchema,
   resetPasswordSchema,
 } from '../validation/auth.js';
-
 import {
   registerUserController,
   loginUserController,
