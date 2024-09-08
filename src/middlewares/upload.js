@@ -1,6 +1,6 @@
 import multer from 'multer';
 import path from 'node:path';
-//k
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, path.resolve('src', 'tmp'));
@@ -11,4 +11,4 @@ const storage = multer.diskStorage({
   },
 });
 export const upload = multer({ storage });
-//k
+

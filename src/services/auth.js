@@ -17,6 +17,11 @@ import {
   SMTP,
 } from '../constants/index.js';
 
+// import {
+//   getFullNameFromGoogleTokenPayload,
+//   validateCode,
+// } from '../utils/googleOAuth2.js';
+
 export async function registerUser(payload) {
   const maybeUser = await UserCollection.findOne({ email: payload.email });
   if (maybeUser !== null) {
@@ -36,12 +41,12 @@ export async function loginUser(email, password) {
   const isMatch = await bcrypt.compare(password, maybeUser.password);
   if (isMatch === false) {
     throw createHttpError(401, 'Unauthorized');
-    //якщо паролі не співпадають
+    //якщо паролі не вірні
   }
 
   await SessionCollection.deleteOne({ userId: maybeUser._id }); //видалення сесії
 
-  //створити нову сесію
+  //створити нову сессію
   return SessionCollection.create({
     userId: maybeUser._id,
     accessToken: crypto.randomBytes(30).toString('base64'),
@@ -150,3 +155,29 @@ export const resetPassword = async (payload) => {
     { password: encryptedPassword },
   );
 };
+
+
+// export const loginOrSignupWithGoogle = async (code) => {
+//   const loginTicket = await validateCode(code);
+//   const payload = loginTicket.getPayload();
+//   if (!payload) throw createHttpError(401);
+
+//   let user = await UserCollection.findOne({ email: payload.email });
+//   if (!user) {
+//     const password = await bcrypt.hash(randomBytes(10), 10);
+//     user = await UserCollection.create({
+//       email: payload.email,
+//       name: getFullNameFromGoogleTokenPayload(payload),
+//       password,
+      // role: 'parent',
+//     });
+//   }
+
+//   const newSession = SessionCollection.create();
+  // const newSession = createSession();
+
+//   return await SessionCollection.create({
+//     userId: user._id,
+//     ...newSession,
+//   });
+// };
