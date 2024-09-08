@@ -58,3 +58,11 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
+    cookieAuthUserId:
+      type: apiKey
+      in: cookie
+      name: sessionId
+    cookieAuthRefreshToken:
+      type: apiKey
+      in: cookie
+      name: refreshToken
