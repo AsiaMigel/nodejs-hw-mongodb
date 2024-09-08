@@ -15,14 +15,14 @@ tags:
 
 servers:
   - url: http://localhost:3000
-  - url: #посилання на задеплоєний сайт
+  - url: https://hw6-email-and-images-hdvq.onrender.com
 
 paths:
  /contacts:
     post: 
-     $ref: ../swagger/paths/contacts/post.yaml
+     $ref: "../swagger/path/contacts/post.yaml"
     get:
-     $ref: ../swagger/paths/contacts/get.yaml
+     $ref: "../swagger/path/contacts/get.yaml"
 
 /contacts/{id}:
     get:
