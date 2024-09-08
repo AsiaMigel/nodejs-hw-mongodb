@@ -30,4 +30,4 @@ export async function authenticate(req, res, next) {
   req.user = user;
 
   next();
-}
+};
